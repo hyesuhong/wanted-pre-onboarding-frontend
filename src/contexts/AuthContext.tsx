@@ -5,8 +5,9 @@ import {
 	useContext,
 	useMemo,
 } from 'react';
-import AuthService, { ISignBody } from '../services/auth';
 import { useNavigate } from 'react-router-dom';
+import AuthService, { ISignBody } from '../services/auth';
+import TokenStorage from '../storage/token';
 
 interface IAuthProvider {
 	authService: AuthService;
@@ -16,12 +17,15 @@ interface IAuthProvider {
 interface IAuthValue {
 	signUp?: any;
 	signIn?: any;
+	tokenStorage?: TokenStorage;
 }
 
 const AuthContext = createContext<IAuthValue>({});
 
 export default function AuthProvider({ authService, children }: IAuthProvider) {
 	const navigate = useNavigate();
+
+	const tokenStorage = authService.tokenStorage;
 
 	const signUp = useCallback(
 		async ({ email, password }: ISignBody) => {
@@ -47,7 +51,7 @@ export default function AuthProvider({ authService, children }: IAuthProvider) {
 				.then((res: any) => {
 					// console.log(res);
 					if (res.status === 200) {
-						localStorage.setItem('access_token', res.data.access_token);
+						tokenStorage.saveToken(res.data.access_token);
 						navigate('/todo');
 					}
 				})
@@ -63,8 +67,9 @@ export default function AuthProvider({ authService, children }: IAuthProvider) {
 		() => ({
 			signUp,
 			signIn,
+			tokenStorage,
 		}),
-		[signUp, signIn]
+		[signUp, signIn, tokenStorage]
 	);
 
 	return (

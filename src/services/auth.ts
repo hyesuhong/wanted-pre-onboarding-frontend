@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { BASE_PATH } from './constants';
+import TokenStorage from '../storage/token';
 
 export interface ISignBody {
 	email: string;
@@ -7,6 +8,12 @@ export interface ISignBody {
 }
 
 export default class AuthService {
+	readonly tokenStorage;
+
+	constructor(tokenStorage: TokenStorage) {
+		this.tokenStorage = tokenStorage;
+	}
+
 	async signUp({ email, password }: ISignBody) {
 		return await axios.post(
 			`${BASE_PATH}/auth/signup`,
@@ -37,35 +44,3 @@ export default class AuthService {
 		);
 	}
 }
-
-// export const postSignUp = async (body: ISignBody) => {
-// 	const { email, password } = body;
-// 	return await axios.post(
-// 		`${BASE_PATH}/auth/signup`,
-// 		{
-// 			email,
-// 			password,
-// 		},
-// 		{
-// 			headers: {
-// 				'Content-Type': 'application/json',
-// 			},
-// 		}
-// 	);
-// };
-
-// export const postSignIn = async (body: ISignBody) => {
-// 	const { email, password } = body;
-// 	return await axios.post(
-// 		`${BASE_PATH}/auth/signin`,
-// 		{
-// 			email,
-// 			password,
-// 		},
-// 		{
-// 			headers: {
-// 				'Content-Type': 'application/json',
-// 			},
-// 		}
-// 	);
-// };
