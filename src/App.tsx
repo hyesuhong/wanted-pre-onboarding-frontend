@@ -1,15 +1,19 @@
-import React from 'react';
-import logo from './logo.svg';
-import Header from './components/Header';
 import { Outlet } from 'react-router-dom';
+import Header from './components/Header';
+import AuthService from './services/auth';
+import AuthProvider from './contexts/AuthContext';
+
+const authService = new AuthService();
 
 function App() {
 	return (
 		<>
-			<Header />
-			<main>
-				<Outlet />
-			</main>
+			<AuthProvider authService={authService}>
+				<Header />
+				<main>
+					<Outlet />
+				</main>
+			</AuthProvider>
 		</>
 	);
 }

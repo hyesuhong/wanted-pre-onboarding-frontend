@@ -1,15 +1,13 @@
 import { useEffect, useState } from 'react';
 import useValidator from '../hooks/useValidator';
-import { postSignUp } from '../services/auth';
-import { useNavigate } from 'react-router-dom';
+import { useAuth } from '../contexts/AuthContext';
 
 export default function Signup() {
-	const navigate = useNavigate();
+	const { signUp } = useAuth();
 
 	const [email, setEmail] = useState('');
 	const [password, setPassword] = useState('');
 	const [validation, setValidation] = useState(false);
-	const [errorMsg, setErrorMsg] = useState<string>();
 
 	const emailValid = useValidator(email, (value) => value.indexOf('@') >= 0);
 	const pwValid = useValidator(password, (value) => value.length >= 8);
@@ -17,16 +15,7 @@ export default function Signup() {
 	const onSubmit = async (ev: React.FormEvent<HTMLFormElement>) => {
 		ev.preventDefault();
 
-		await postSignUp({ email, password })
-			.then((res) => {
-				if (res.status === 201) {
-					navigate('/signin');
-				}
-			})
-			.catch((error) => {
-				console.error(error);
-				setErrorMsg('이미 존재하는 메일 주소 입니다.');
-			});
+		await signUp({ email, password });
 	};
 
 	const onChange = (ev: React.ChangeEvent<HTMLInputElement>) => {
@@ -69,7 +58,6 @@ export default function Signup() {
 					회원가입
 				</button>
 			</form>
-			{errorMsg && <p>{errorMsg}</p>}
 		</>
 	);
 }
