@@ -1,9 +1,11 @@
 import { useState } from 'react';
+import { ITodo } from '../services/todo';
 
 interface IToDoList {
-	todo: string;
+	todo: ITodo;
 }
 export default function ToDoList({ todo }: IToDoList) {
+	const { id, todo: text, isCompleted, userId } = todo;
 	const [editmode, setEditmode] = useState(false);
 
 	return (
@@ -23,7 +25,7 @@ export default function ToDoList({ todo }: IToDoList) {
 				<>
 					<label>
 						<input type='checkbox' />
-						<span>{todo}</span>
+						<span>{text}</span>
 					</label>
 					<button data-testid='modify-button' onClick={() => setEditmode(true)}>
 						수정
