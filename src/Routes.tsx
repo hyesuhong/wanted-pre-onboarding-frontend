@@ -27,16 +27,7 @@ const router = createBrowserRouter([
 		children: [
 			{
 				path: '',
-				element: <Home />,
-				loader: () => {
-					const token = localStorage.getItem('access_token');
-
-					if (token) {
-						return <Signin />;
-					} else {
-						return <ToDo />;
-					}
-				},
+				element: localStorage.getItem('access_token') ? <ToDo /> : <Signin />,
 			},
 			{
 				path: '/signup',
