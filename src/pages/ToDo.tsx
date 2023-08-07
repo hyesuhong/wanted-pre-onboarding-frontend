@@ -1,8 +1,35 @@
+import { styled } from 'styled-components';
 import ToDoForm from '../components/ToDoForm';
 import ToDoList from '../components/ToDoList';
+import Title from '../components/ui/Title';
 import { useAuth } from '../contexts/AuthContext';
 import TodoService, { ITodo } from '../services/todo';
 import { useEffect, useState } from 'react';
+
+const UList = styled.ul`
+	width: 260px;
+	max-height: 400px;
+	overflow-x: hidden;
+	overflow-y: auto;
+
+	& > li {
+		display: flex;
+		align-items: center;
+
+		&:not(:last-child) {
+			margin-bottom: 10px;
+		}
+
+		& input[type='text'] {
+			flex: 1;
+		}
+
+		& button {
+			flex: 0 0 42px;
+			margin-left: 5px;
+		}
+	}
+`;
 
 export default function ToDo() {
 	const { tokenStorage } = useAuth();
@@ -74,8 +101,9 @@ export default function ToDo() {
 
 	return (
 		<>
+			<Title title='Todo List' />
 			<ToDoForm createTodo={createTodo} />
-			<ul>
+			<UList>
 				{todos.map((todo) => (
 					<li key={todo.id}>
 						<ToDoList
@@ -85,7 +113,7 @@ export default function ToDo() {
 						/>
 					</li>
 				))}
-			</ul>
+			</UList>
 		</>
 	);
 }

@@ -1,5 +1,8 @@
 import { useState } from 'react';
 import { ITodo } from '../services/todo';
+import InputField from './ui/InputField';
+import Button from './ui/Button';
+import Checkbox from './ui/Checkbox';
 
 interface IToDoList {
 	todo: ITodo;
@@ -37,38 +40,48 @@ export default function ToDoList({ todo, updateTodo, deleteTodo }: IToDoList) {
 		<>
 			{editmode ? (
 				<>
-					<input
-						data-testid='modify-input'
+					<InputField
+						type='text'
+						testId='modify-input'
 						value={todoText}
 						onChange={onEdit}
 					/>
-					<button data-testid='submit-button' onClick={onUpdate}>
+					<Button testId='submit-button' onClick={onUpdate} $elSize='small'>
 						제출
-					</button>
-					<button
-						data-testid='cancel-button'
+					</Button>
+					<Button
+						testId='cancel-button'
 						onClick={() => setEditmode(false)}
+						$elSize='small'
+						$isPrimary={false}
 					>
 						취소
-					</button>
+					</Button>
 				</>
 			) : (
 				<>
-					<label>
-						<input
-							type='checkbox'
-							value={id}
-							checked={isCompleted}
-							onChange={onChange}
-						/>
-						<span>{todoText}</span>
-					</label>
-					<button data-testid='modify-button' onClick={() => setEditmode(true)}>
+					<Checkbox
+						itemId={id}
+						checked={isCompleted}
+						onChange={onChange}
+						todoText={todoText}
+					/>
+
+					<Button
+						testId='modify-button'
+						onClick={() => setEditmode(true)}
+						$elSize='small'
+					>
 						수정
-					</button>
-					<button data-testid='delete-button' onClick={onDelete}>
+					</Button>
+					<Button
+						testId='delete-button'
+						onClick={onDelete}
+						$elSize='small'
+						$isPrimary={false}
+					>
 						삭제
-					</button>
+					</Button>
 				</>
 			)}
 		</>

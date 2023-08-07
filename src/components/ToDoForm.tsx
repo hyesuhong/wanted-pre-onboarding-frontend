@@ -1,4 +1,20 @@
 import { useState } from 'react';
+import { styled } from 'styled-components';
+import InputField from './ui/InputField';
+import Button from './ui/Button';
+
+const Form = styled.form`
+	width: 260px;
+
+	display: flex;
+	gap: 10px;
+
+	margin-bottom: 20px;
+
+	& > input {
+		flex: 1;
+	}
+`;
 
 interface Props {
 	createTodo: (todo: string) => Promise<void>;
@@ -23,15 +39,17 @@ export default function ToDoForm({ createTodo }: Props) {
 	};
 
 	return (
-		<form onSubmit={onSubmit}>
-			<input
+		<Form onSubmit={onSubmit}>
+			<InputField
 				type='text'
 				name='newTodo'
-				data-testid='new-todo-input'
+				testId='new-todo-input'
 				value={todo}
 				onChange={onChange}
 			/>
-			<button data-testid='new-todo-add-button'>추가</button>
-		</form>
+			<Button testId='new-todo-add-button' disabled={todo === ''}>
+				추가
+			</Button>
+		</Form>
 	);
 }
