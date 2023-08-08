@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { styled } from 'styled-components';
 import useValidator from '../hooks/useValidator';
 import { useAuth } from '../contexts/AuthContext';
@@ -59,7 +59,8 @@ const Para = styled.p`
 `;
 
 export default function Signin() {
-	const { signIn } = useAuth();
+	const { signIn, tokenStorage } = useAuth();
+	const navigate = useNavigate();
 
 	const [email, setEmail] = useState('');
 	const [password, setPassword] = useState('');
@@ -92,6 +93,13 @@ export default function Signin() {
 	useEffect(() => {
 		setValidation(emailValid && pwValid);
 	}, [emailValid, pwValid]);
+
+	useEffect(() => {
+		if (tokenStorage && tokenStorage.getToken()) {
+			alert('이미 로그인되어 있습니다.');
+			navigate('/todo');
+		}
+	}, [tokenStorage, navigate]);
 
 	return (
 		<>

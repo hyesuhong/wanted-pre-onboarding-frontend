@@ -5,6 +5,7 @@ import Title from '../components/ui/Title';
 import { useAuth } from '../contexts/AuthContext';
 import TodoService, { ITodo } from '../services/todo';
 import { useEffect, useMemo, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 const UList = styled.ul`
 	width: 260px;
@@ -37,6 +38,7 @@ export default function ToDo() {
 		return new TodoService(tokenStorage!);
 	}, [tokenStorage]);
 	const [todos, setTodos] = useState<ITodo[]>([]);
+	const navigate = useNavigate();
 
 	const createTodo = async (todo: string) => {
 		await todoService
@@ -90,16 +92,21 @@ export default function ToDo() {
 	};
 
 	useEffect(() => {
-		todoService
-			.getTodos()
-			.then((res) => {
-				// console.log(res);
-				if (res.status === 200) {
-					setTodos(res.data);
-				}
-			})
-			.catch((error) => console.error(error));
-	}, [todoService, setTodos]);
+		if (!tokenStorage?.getToken()) {
+			alert('로그인을 먼저 진행해주세요.');
+			navigate('/signin');
+		} else {
+			todoService
+				.getTodos()
+				.then((res) => {
+					// console.log(res);
+					if (res.status === 200) {
+						setTodos(res.data);
+					}
+				})
+				.catch((error) => console.error(error));
+		}
+	}, [tokenStorage, todoService, navigate]);
 
 	return (
 		<>
