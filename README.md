@@ -10,23 +10,8 @@
 npm install & npm start
 ```
 
-## 데모 영상 or 배포된 사이트
-
-(추가예정)
-
-### Auth
-
-#### Sign in
-
-#### Sign up
-
-### Todo
-
-#### create
-
-#### update
-
-#### delete
+## 배포된 사이트
+[👉링크](https://fancy-baklava-ed3ee5.netlify.app/)
 
 ---
 
