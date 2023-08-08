@@ -1,10 +1,5 @@
 import { useEffect, useState } from 'react';
-import axios, {
-	AxiosError,
-	AxiosRequestConfig,
-	AxiosResponse,
-	Method,
-} from 'axios';
+import axios, { AxiosError, AxiosRequestConfig, AxiosResponse } from 'axios';
 
 interface IAxiosState {
 	loading: boolean;

@@ -41,7 +41,7 @@ export default function AuthProvider({ authService, children }: IAuthProvider) {
 					// setErrorMsg('이미 존재하는 메일 주소 입니다.');
 				});
 		},
-		[authService]
+		[authService, navigate]
 	);
 
 	const signIn = useCallback(
@@ -60,7 +60,7 @@ export default function AuthProvider({ authService, children }: IAuthProvider) {
 					// setErrorMsg('아이디 혹은 비밀번호가 다릅니다.');
 				});
 		},
-		[authService]
+		[authService, navigate, tokenStorage]
 	);
 
 	const contextValue = useMemo(

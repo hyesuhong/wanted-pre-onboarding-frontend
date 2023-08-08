@@ -2,7 +2,6 @@ import { createBrowserRouter, redirect } from 'react-router-dom';
 import App from './App';
 import NotFound from './pages/NotFound';
 import Signup from './pages/Signup';
-import Home from './pages/Home';
 import Signin from './pages/Signin';
 import ToDo from './pages/ToDo';
 

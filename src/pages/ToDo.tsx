@@ -4,7 +4,7 @@ import ToDoList from '../components/ToDoList';
 import Title from '../components/ui/Title';
 import { useAuth } from '../contexts/AuthContext';
 import TodoService, { ITodo } from '../services/todo';
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 
 const UList = styled.ul`
 	width: 260px;
@@ -33,7 +33,9 @@ const UList = styled.ul`
 
 export default function ToDo() {
 	const { tokenStorage } = useAuth();
-	const todoService = new TodoService(tokenStorage!);
+	const todoService = useMemo(() => {
+		return new TodoService(tokenStorage!);
+	}, [tokenStorage]);
 	const [todos, setTodos] = useState<ITodo[]>([]);
 
 	const createTodo = async (todo: string) => {
@@ -97,7 +99,7 @@ export default function ToDo() {
 				}
 			})
 			.catch((error) => console.error(error));
-	}, []);
+	}, [todoService, setTodos]);
 
 	return (
 		<>

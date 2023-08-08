@@ -5,7 +5,7 @@ const useValidator = <T>(value: T, validator: (value: T) => boolean) => {
 
 	useEffect(() => {
 		setIsValid(validator(value));
-	}, [value]);
+	}, [value, validator]);
 
 	return isValid;
 };

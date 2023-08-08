@@ -11,7 +11,7 @@ interface IToDoList {
 }
 
 export default function ToDoList({ todo, updateTodo, deleteTodo }: IToDoList) {
-	const { id, todo: text, isCompleted, userId } = todo;
+	const { id, todo: text, isCompleted } = todo;
 	const [editmode, setEditmode] = useState(false);
 	const [todoText, setTodoText] = useState(text);
 
