@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { BASE_PATH } from './constants';
+import { BASE_PATH } from '../constants/api';
 import TokenStorage from '../storage/token';
 
 export interface ISignBody {
