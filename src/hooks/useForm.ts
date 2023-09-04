@@ -30,10 +30,11 @@ const useForm = ({ inputs, submitHandler }: UseForm) => {
 	const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
 		const { name, value } = event.target;
 
-		setForm({
-			...form,
-			[name]: { ...form[name], value, isValid: inputs[name].validator(value) },
-		});
+		if (!inputs[name]) return;
+
+		const isValid = inputs[name].validator(value);
+
+		setForm((prev) => ({ ...prev, [name]: { value, isValid } }));
 	};
 
 	const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
