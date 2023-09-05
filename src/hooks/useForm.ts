@@ -6,7 +6,7 @@ interface UseForm {
 }
 
 export interface inputProps {
-	[key: string]: { value: string; validator: validator };
+	[key: string]: { value: string; validator?: validator };
 }
 
 interface inputReturns {
@@ -32,7 +32,9 @@ const useForm = ({ inputs, submitHandler }: UseForm) => {
 
 		if (!inputs[name]) return;
 
-		const isValid = inputs[name].validator(value);
+		const isValid = inputs[name].validator
+			? inputs[name].validator?.(value)
+			: true;
 
 		setForm((prev) => ({ ...prev, [name]: { value, isValid } }));
 	};
